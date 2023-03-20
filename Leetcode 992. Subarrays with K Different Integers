@@ -1,1 +1,40 @@
+class Solution {
+public:
 
+int f(int k,vector<int>&nums){
+    int i=0,j=0;
+    unordered_map<int,int>umap;
+    int n=nums.size();
+    int ans=0,diff=0;
+     
+     while(j<n ){
+        if(umap[nums[j]]==0){
+            diff++;
+            umap[nums[j]]++;
+          }
+          
+        else{
+          umap[nums[j]]++;
+        }
+
+        if(diff<=k){
+          ans+=j-i+1;
+        }
+
+        else{
+        
+           while(diff>k && i<=j){
+               umap[nums[i]]--;
+               if(umap[nums[i]]==0) diff--;
+                   i++;}
+
+            ans+=j-i+1;
+        }
+      j++;
+     }
+   return ans;
+ }
+int subarraysWithKDistinct(vector<int>& nums, int k) {
+        return f(k,nums)-f(k-1,nums);
+   }
+};
