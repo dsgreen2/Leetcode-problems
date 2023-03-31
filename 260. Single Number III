@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+
+        long long xxory=0;
+        for(int i=0;i<nums.size();i++){
+            xxory=xxory^nums[i];
+        }
+
+        long long rmsb=xxory&(-xxory);
+
+        int bset=0;
+        int bnset=0;
+        for(int i=0;i<nums.size();i++){
+            if(rmsb&nums[i]){
+                bset=bset^nums[i];
+            }
+            else{
+                bnset=bnset^nums[i];
+            }
+        }
+
+        vector<int> ans;
+        ans.push_back(bset);
+        ans.push_back(bnset);
+
+
+        return ans;
+        
+    }
+};
