@@ -1,0 +1,73 @@
+class Solution {
+public:
+/*
+void dfs(int i,unordered_map<int,vector<int>>& umap,long long &cnt,vector<int>&vis){
+
+    for(auto x:umap[i]){
+        if(!vis[x]){
+            cnt++;
+            vis[x]=1;
+            dfs(x,umap,cnt,vis);
+        }
+    }
+
+}
+    long long countPairs(int n, vector<vector<int>>& edges) {
+
+        unordered_map<int,vector<int>> umap;
+
+        for(auto i: edges){
+            umap[i[0]].push_back(i[1]);
+            umap[i[1]].push_back(i[0]);
+        }
+
+        vector<int> vis(n,-1);
+        long long ans=0;
+        for(int i=0;i<n;i++){
+            long long cnt=0;
+            if(vis[i]==-1){
+                vector<int> vis(n,0);
+                
+                dfs(i,umap,cnt,vis);
+            }
+            if(cnt==0) cnt++;
+            vis[i]=n-cnt;
+            ans+=n-cnt;
+        }
+        for(auto mm:vis){
+            
+            cout<<mm<<" "<<endl;
+        }
+
+        return ans/2;
+        
+    }
+    */
+
+     typedef long long ll;
+    void dfs(int node, unordered_map<int,vector<int>>& m, ll& cnt, vector<int>& vis){
+        vis[node] = 1;
+        cnt++;
+        for(auto& i: m[node]){
+            if(vis[i]==0) dfs(i,m,cnt,vis);   
+        }
+    }
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        unordered_map<int,vector<int>> m; // making adjacency list
+        for(int i=0;i<edges.size();i++){
+            m[edges[i][0]].push_back(edges[i][1]);
+            m[edges[i][1]].push_back(edges[i][0]);
+        }
+        ll ans = ((ll)n*(n-1))/2;
+        vector<int> vis(n,0);
+        for(int i=0;i<n;i++){
+            if(vis[i]==0){ // as node is not visited, we find the no. of nodes in current component.
+                ll cnt = 0;
+                dfs(i,m,cnt,vis);
+                ans -= (cnt*(cnt-1))/2;
+            }
+        }
+        return ans;
+    }
+
+};
