@@ -1,0 +1,28 @@
+void f(TreeNode*root,priority_queue<int,vector<int>,greater<int>>&pq){
+    if(root==NULL ) return ;
+    if(root->left){
+        f(root->left,pq);
+    }
+
+    pq.push(root->val);
+
+    if(root->right){
+        f(root->right,pq);
+    }
+
+
+}
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        priority_queue<int,vector<int>,greater<int>> pq;
+
+        f(root1,pq);
+        f(root2,pq);
+        vector<int> ans;
+
+        while(!pq.empty()){
+            ans.push_back(pq.top());
+            pq.pop();
+        }
+
+        return ans;
+    }
