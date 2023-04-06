@@ -1,0 +1,43 @@
+ int longestPalindrome(vector<string>& words) {
+
+        unordered_map<string,int> umap;
+        int ans=0;
+
+        for(int i=0;i<words.size();i++){
+
+            string curr=words[i];
+            char x=words[i][0];
+            words[i][0]=words[i][1];
+            words[i][1]=x;
+
+
+            if(umap.find(words[i])!=umap.end() && umap[words[i]]>0){
+                umap[words[i]]--;
+                ans+=words[i].length();
+                ans+=words[i].length();
+            }
+            else {
+                umap[curr]++;
+            }
+        
+        }
+        int middlewordlen=0;
+
+        for(auto i : umap){
+            int l=i.first.length();
+            string ll=i.first;
+            char x=ll[0];
+            ll[0]=ll[1];
+            ll[1]=x;
+            
+            if(ll==i.first && i.second>0){
+               middlewordlen=max(middlewordlen,l);
+            }
+        }
+
+
+        ans+=middlewordlen;
+
+        return ans;
+        
+    }
