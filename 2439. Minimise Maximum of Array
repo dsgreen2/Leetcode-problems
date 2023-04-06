@@ -1,0 +1,70 @@
+bool ismaxpos(vector<long long> nums,int maxval){
+    int n=nums.size();
+    long long  carry=0;
+    for(int i=n-1;i>0;i--){
+        nums[i]=nums[i]+carry;
+
+        if(nums[i]>maxval){
+            carry=nums[i]-maxval;
+            nums[i]=nums[i]-carry;
+        }
+        else{
+            carry=0;
+        }
+    }
+
+   // cout<<"carry+nums[0] : "<<carry+nums[0]<<endl;
+/*
+    for(int i=0;i<n;i++){
+         cout<<nums[i]<<",";
+    }
+
+    cout<<endl;
+*/
+
+    if(carry+nums[0]>maxval) return 0;
+    return 1;
+
+}
+    int minimizeArrayValue(vector<int>& nums) {
+        int n=nums.size();
+        int maxans=INT_MIN;
+        for(int i=0;i<n;i++){
+            if(nums[i]>maxans){
+                maxans=nums[i];
+            }
+        }
+
+        int lo=1;
+        int hi=maxans;
+        int mid=0;
+
+        int toret=INT_MAX;
+
+        vector<long long> v(n,0);
+
+        for(int i=0;i<n;i++){
+            v[i]=nums[i];
+        }
+
+        while(lo<=hi){
+            
+            mid=lo+(hi-lo)/2;
+
+           // cout<<"mid "<<mid<<endl;
+
+            if(ismaxpos(v,mid)){
+                //cout<<"yes"<<endl;
+                toret=min(toret,mid);
+                hi=mid-1;
+            }
+
+            else{
+                lo=mid+1;
+            }
+        }
+
+        if(toret==INT_MAX) return 0;
+
+        return toret;
+    }
