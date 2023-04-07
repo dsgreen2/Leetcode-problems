@@ -1,0 +1,62 @@
+class Solution {
+public:
+int dfs(int i,unordered_map<int,vector<int>>& umap,long long &ans,int seats,int par){
+
+    if(umap[i].size()==1){
+        ans+=1;
+        return 1;
+    }
+
+    int tseat=0;
+    for(auto j:umap[i]){
+        if(j!=par){
+            tseat+=dfs(j,umap,ans,seats,i);
+        }
+    }
+
+    tseat+=1;
+    double toadd=ceil((double)tseat/(double)seats);
+
+    ans+=toadd;
+    /*
+    cout<<"i "<<i<<endl;
+    cout<<"tseat "<<tseat<<endl;
+    */
+    return tseat;
+
+}
+    long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
+
+        if(roads.size()==0) return 0;
+
+        unordered_map<int,vector<int>> umap;
+
+        for(auto i:roads){
+            umap[i[0]].push_back(i[1]);
+            umap[i[1]].push_back(i[0]);
+        }
+
+        int n=umap.size();
+
+        vector<int> vis(n,0);
+        vis[0]=1;
+
+        long long ans=0;
+
+        //cout<<"n "<<n<<endl;
+        for(auto i:umap[0]){
+            //vis[i]=1;
+            int seattoadd=0;
+            seattoadd=dfs(i,umap,ans,seats,0);
+            /*
+            double toadd=ceil((double)seattoadd/(double)seats);
+            ans+=toadd;
+            
+            cout<<"i "<<i<<endl;
+            */
+        }
+
+        return ans;
+        
+    }
+};
