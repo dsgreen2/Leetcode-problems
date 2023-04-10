@@ -1,0 +1,48 @@
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+
+        queue<Node*> q;
+        q.push(node); 
+        if(node==NULL) return NULL;
+        Node*n1=new Node(node->val);
+        queue<Node*> cq;
+        cq.push(n1);
+        unordered_map<Node*,bool> vis;
+        vis[node]=1;
+        unordered_map<Node*,Node*> change;
+        change[node]=n1;
+
+        while(!q.empty()){
+
+            Node*f=q.front();
+            Node*cf=cq.front();
+            q.pop();
+            cq.pop();
+
+            vis[f]=1;
+
+            for(auto i:f->neighbors){
+               // cout<<"vis["<<i<<"] = "<<" "<<i->val<<" "<<vis[i]<<endl;
+                Node*n3=new Node();
+                if(change[i]!=NULL){
+                    n3=change[i];
+                }
+                else{
+                n3=new Node(i->val);
+                change[i]=n3;
+                
+                }
+                
+                if(vis[i]==0){
+                n3->neighbors.push_back(cf);
+                cf->neighbors.push_back(n3);
+                q.push(i);
+                cq.push(n3);
+               
+                }
+            }
+
+        }
+        return n1;
+    }
