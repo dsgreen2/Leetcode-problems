@@ -1,0 +1,24 @@
+class Solution
+{
+    public:
+    void f(Node*root,Node*root1,long long&ans){
+        if(root->left==NULL && root->right==NULL){
+            ans=ans+root->data*root1->data;
+            return;
+        }
+        
+        if(root->left && root1->right)f(root->left,root1->right,ans);
+        ans=ans+root->data*root1->data;
+       if(root->right && root1->left) f(root->right,root1->left,ans);
+    }
+    long long imgMultiply(Node *root)
+    {
+        long long ans=0;
+        int mod=1e9+7;
+        f(root,root,ans);
+        ans=ans+root->data*root->data;
+        ans=ans/2;
+        ans=ans%mod;
+        return ans;
+    }
+};
