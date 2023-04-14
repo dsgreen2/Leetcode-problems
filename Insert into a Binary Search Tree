@@ -1,0 +1,45 @@
+class Solution {
+public:
+void f(TreeNode*root,int v){
+    if(root->left==NULL && root->right==NULL){
+        if(v>root->val){
+           TreeNode*m=new TreeNode(v);
+           root->right=m;
+        }
+        if(v<root->val){
+           TreeNode*m=new TreeNode(v);
+           root->left=m;
+        }
+
+        return;
+    }
+
+    if(root->val<v){
+       if(root->right) f(root->right,v);
+       else{
+            TreeNode*m=new TreeNode(v);
+           root->right=m;
+
+       }
+    }
+
+    if(root->val>v){
+        if(root->left) f(root->left,v);
+        else{
+            TreeNode*m=new TreeNode(v);
+            root->left=m;
+        }
+    }
+
+}
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==NULL){
+            TreeNode*m=new TreeNode(val);
+            return m;
+        }
+
+        f(root,val);
+        return root;
+        
+    }
+};
