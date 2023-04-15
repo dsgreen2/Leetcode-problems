@@ -1,0 +1,46 @@
+class Solution {
+public:
+int f(int i,vector<vector<int>>& piles,int k,int j,vector<vector<vector<int>>>& v){
+    if(k==0){
+        return 0;
+    }
+    if(i==piles.size()){
+        return 0;
+    }
+int take=0;
+
+if(v[i][k][j]!=-1){
+    return v[i][k][j];
+}
+    if(j<piles[i].size()){
+
+     take=piles[i][j];
+    j++;
+    k=k-1;
+    take=take+f(i,piles,k,j,v);
+    k++;
+    j--;
+    }
+
+    int nottake=f(i+1,piles,k,0,v);
+    /*
+    cout<<i<<endl;
+    cout<<take<<" "<<nottake<<endl;
+    */
+    
+    return v[i][k][j]=max(take,nottake);
+}
+    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
+
+        unordered_map<int,int> umap;
+        int j=0;
+        for(int i=0;i<piles.size();i++){
+            int xx=piles[i].size();
+            j=max(j,xx);
+        }
+
+        vector<vector<vector<int>>> v(piles.size()+1,vector<vector<int>>(k+1,vector<int>(j+1,-1)));
+        return f(0,piles,k,0,v);
+        
+    }
+};
