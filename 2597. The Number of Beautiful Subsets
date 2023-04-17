@@ -1,0 +1,21 @@
+class Solution {
+public:
+int f(int i,vector<int>& nums,int k,vector<int>&vis){
+    if(i==nums.size()){
+        return 0;
+    }
+int take=0;
+if(!vis[nums[i]]){
+    if(nums[i]+k<vis.size())vis[nums[i]+k]+=1;
+    take=1+ f(i+1,nums,k,vis);
+    if(nums[i]+k<vis.size())vis[nums[i]+k]--;    
+}
+   int nottake= f(i+1,nums,k,vis);
+   return take+nottake;
+}
+    int beautifulSubsets(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        vector<int> vis(nums[nums.size()-1]+1,0);
+        return f(0,nums,k,vis);
+    }
+};
