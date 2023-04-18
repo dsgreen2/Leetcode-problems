@@ -1,0 +1,63 @@
+class Solution {
+public:
+    TreeNode* replaceValueInTree(TreeNode* root) {
+
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,1});
+
+        unordered_map<int,int> umap;
+
+        while(!q.empty()){
+            pair<TreeNode*,int>p=q.front();
+            TreeNode*curroot=p.first;
+
+            q.pop();
+
+            if(curroot->left){
+                umap[p.second+1]+=curroot->left->val;
+                pair<TreeNode*,int> pp={curroot->left,p.second+1};
+                q.push(pp);
+            }
+
+            if(curroot->right){
+                umap[p.second+1]+=curroot->right->val;
+                pair<TreeNode*,int> pp={curroot->right,p.second+1};
+                q.push(pp);
+            }
+            
+        }
+
+        root->val=0;
+        q.push({root,1});
+
+        while(!q.empty()){
+            pair<TreeNode*,int>p=q.front();
+            TreeNode*curroot=p.first;
+            q.pop();
+
+            int leftval=umap[p.second+1];
+            int rightval=umap[p.second+1];
+
+            if(curroot->left){
+                leftval-=curroot->left->val;
+                rightval-=curroot->left->val;
+                pair<TreeNode*,int> pp={curroot->left,p.second+1};
+                q.push(pp);
+
+            }
+
+            if(curroot->right){
+                leftval-=curroot->right->val;
+                rightval-=curroot->right->val;
+                pair<TreeNode*,int> pp={curroot->right,p.second+1};
+                q.push(pp);
+            }
+            
+            if(curroot->left)curroot->left->val=leftval;
+            if(curroot->right)curroot->right->val=rightval;
+        }
+
+        return root;
+
+    }
+};
