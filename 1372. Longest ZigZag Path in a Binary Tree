@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int dfs(TreeNode*root,int k,int x){
+        if(root->left==NULL && root->right==NULL){
+            return k+1;
+        }
+        int a=0,b=0,c=0,d=0,nottakemax=0;
+
+        if(x==0){
+            if(root->left){
+                c=dfs(root->left,k,0);
+                 b=dfs(root->left,k+1,1);
+            }
+            if(root->right){
+                d=dfs(root->right,k,0);
+                a=dfs(root->right,k+1,2);
+            }           
+            nottakemax=max(c,d);
+            return max(a,(b,nottakemax));
+        }
+        else if(x==1){
+           if(root->right) a=dfs(root->right,k+1,2);
+           else return k;
+        }
+        else if(x==2){
+           if(root->left) b=dfs(root->left,k+1,1);
+           else return k;
+        }
+
+        return max(a,b);
+    }
+    
+    int longestZigZag(TreeNode* root) {
+        if(root==NULL || ((root->left==NULL)&&(root->right==NULL))){
+            return 0;
+        }
+        return dfs(root,0,0);
+    }
+};
