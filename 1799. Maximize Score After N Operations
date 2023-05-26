@@ -1,0 +1,27 @@
+class Solution {
+public:
+int f(vector<int>& nums,int n,int mask,vector<vector<int>>& dp){
+
+    if(n==0) return 0;
+    if(dp[n][mask]!=-1) return dp[n][mask];
+    int ans=0;
+    for(int i=0;i<nums.size();i++){
+        if(mask &(1<<i)) continue;
+        for(int j=i+1;j<nums.size();j++){
+            if(mask &(1<<j)) continue;
+
+            int newmask=(1<<i) | (1<<j) | (mask);
+            int score=n*gcd(nums[i],nums[j])+f(nums,n-1,newmask,dp);ans=max(ans,score);
+        }
+    }
+    return dp[n][mask]=ans;
+}
+    int maxScore(vector<int>& nums) {
+
+        int n=nums.size()/2;
+        vector<vector<int>> dp(n+1,vector<int>(1<<14+1,-1));
+        return f(nums,n,0,dp);
+    
+
+    }
+};
