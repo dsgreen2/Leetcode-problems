@@ -1,0 +1,33 @@
+class Solution {
+public:
+TreeNode*f(int&postorderind,int inorderst,int inorderend,vector<int>&inorder,vector<int>&postorder){
+    if(postorderind<0){
+        return NULL;
+    }
+
+    if(inorderst>inorderend){
+        return NULL;
+    }
+
+    int currootind=0;
+    for(int i=0;i<inorder.size();i++){
+        if(inorder[i]==postorder[postorderind]){
+            currootind=i;
+            break;
+        }
+    }
+    postorderind--;
+
+    TreeNode*currootnode=new TreeNode(inorder[currootind]);
+    currootnode->right=f(postorderind,currootind+1,inorderend,inorder,postorder);
+    currootnode->left=f(postorderind,inorderst,currootind-1,inorder,postorder);
+   
+    
+    return currootnode;
+}
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int postorderind=postorder.size()-1;
+    return f(postorderind,0,inorder.size()-1,inorder,postorder);
+        
+    }
+};
