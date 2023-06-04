@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<int> st;
+        int i=0;
+      
+        while(i<s.length()){
+          //  cout<<i<<endl;
+            if(s[i]!='(' && s[i]!=')'){
+                i++;
+                continue;
+            }
+
+            else{
+                if(s[i]=='('){
+                    st.push(i);
+                }
+                else if(s[i]==')' && st.empty()){
+                  s[i]='#'; 
+                }
+                else if(s[i]==')'){
+                  st.pop();
+                }
+            }
+            i++; 
+        }
+      //  cout<<"out of while "<<endl;
+        string x="";
+        int j=s.length()-1;
+        while(j>=0){
+            
+            if(s[j]=='#'){}
+            else if(!st.empty() && j==st.top()){st.pop();}
+            else x=s[j]+x;
+            j--;
+        }
+        return x;
+        
+    }
+};
