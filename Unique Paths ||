@@ -1,0 +1,33 @@
+class Solution {
+public:
+vector<vector<int>> og;
+int f(int i,int j){
+    if(i==og.size()-1 && j==og[0].size()-1) return 1;
+    int down=0,right=0;
+     if(i+1<og.size() && og[i+1][j]==0)down=f(i+1,j);
+     if(j+1<og[0].size() && og[i][j+1]==0) right=f(i,j+1);
+     return down+right;
+}
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        if(obstacleGrid[0][0]==1) return 0;
+        og=obstacleGrid;
+        //return f(0,0);           
+
+        vector<vector<long long>> dp(obstacleGrid.size()+1,vector<long long>(obstacleGrid[0].size()+1,0));
+        int m=obstacleGrid.size();
+        int n=obstacleGrid[0].size();
+        int cdown=0,cright=0;
+        for(int i=obstacleGrid.size()-1;i>=0;i--){
+            for(int j=obstacleGrid[0].size()-1;j>=0;j--){
+                if(i==m-1 && j==n-1) dp[i][j]=1;
+                else{
+                  long long down=0,right=0;
+                  if(i+1<og.size() && og[i+1][j]==0)down=dp[i+1][j];
+                  if(j+1<og[0].size() && og[i][j+1]==0) right=dp[i][j+1];
+                  dp[i][j]=down+right;
+                }
+              }
+        }
+        return dp[0][0];
+    }
+};
