@@ -1,0 +1,33 @@
+class Solution {
+public:
+int f(int i,vector<int> & sat,int tim,vector<vector<int>>& v){
+
+    if(i==sat.size()){
+        return 0;
+    }
+
+    if(v[i][tim]!=-1){
+        return v[i][tim];
+    }
+
+    int take=0;
+    int nottake=0;
+
+    take=tim*sat[i]+f(i+1,sat,tim+1,v);
+    nottake=f(i+1,sat,tim,v);
+/*
+    cout<<"i "<<i<<endl;
+    cout<<"time "<<tim<<endl;
+    cout<<"take "<<take<<endl;
+    cout<<"nottake "<<nottake<<endl;
+*/
+    return v[i][tim]=max(take,nottake);
+}
+
+    int maxSatisfaction(vector<int>& satisfaction) {
+        sort(satisfaction.begin(),satisfaction.end());
+
+        vector<vector<int>> v(satisfaction.size()+1,vector<int>(satisfaction.size()+1,-1));
+        return f(0,satisfaction,1,v);
+    }
+};
