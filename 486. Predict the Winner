@@ -1,0 +1,20 @@
+class Solution {
+public:
+int f(int st,int end,vector<int>&nums){
+    if(st>end)return 0;
+    
+    int l=nums[st]+min(f(st+1,end-1,nums),f(st+2,end,nums));
+    int r=nums[end]+min(f(st+1,end-1,nums),f(st,end-2,nums));
+    //cout<<"l "<<l<<" r "<<r<<endl; 
+    return max(l,r);
+}
+    bool PredictTheWinner(vector<int>& nums) {
+    
+        int x=f(0,nums.size()-1,nums);
+        int sum=0;
+        for(auto i:nums) sum+=i;
+      //  cout<<"x "<<x<<endl;
+        if(2*x>=sum) return 1;
+        return 0;
+    }
+};
