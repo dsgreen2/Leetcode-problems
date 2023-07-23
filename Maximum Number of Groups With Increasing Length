@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxIncreasingGroups(vector<int>& usageLimits) {
+
+        sort(usageLimits.begin(),usageLimits.end());
+
+         long long noofgroups=0;
+         long long noofelements=0;
+         for(int i=0;i<usageLimits.size();i++){
+             noofelements+=usageLimits[i];
+             if(noofelements>=(long long)(noofgroups+1)*(noofgroups+2)/2) noofgroups++; 
+         }
+
+         return noofgroups;
+    }
+};
