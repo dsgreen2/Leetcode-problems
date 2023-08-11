@@ -1,0 +1,40 @@
+class Solution {
+public:
+    double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start, int end){
+
+        unordered_map< int , vector<pair<int,double>>>umap;
+
+        for(int i=0;i<edges.size();i++){
+            umap[edges[i][0]].push_back({edges[i][1],succProb[i]});
+            umap[edges[i][1]].push_back({edges[i][0],succProb[i]});
+        }
+
+        priority_queue<pair<double,int>,vector<pair<double,int>>>pq;
+
+        vector<double>v(n,0);
+        v[start]=1;
+        pq.push({1,start});
+        while(!pq.empty() && pq.top().second!=end){
+            auto t=pq.top();
+            pq.pop();
+            
+            //cout<<t.second<<" "<<t.first<<endl;
+            //cout<<"pq size "<<pq.size()<<endl;
+            for(auto j:umap[t.second]){
+               // cout<<"j "<<j.first<<" prob "<<v[j.first]<<endl;
+                if(t.first*j.second>v[j.first]){
+                   // cout<<"yes "<<endl;
+                    v[j.first]=t.first*j.second;
+                    pq.push({v[j.first],j.first});
+                   // cout<<"new prob "<<v[j.first]<<endl;
+                }
+            }
+           // cout<<"pq size "<<pq.size()<<endl;
+        }
+
+
+        return v[end];
+
+        
+    }
+};
