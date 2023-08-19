@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool makeStringsEqual(string s, string target) {
+        int onecount=0;
+        for(int i=0;i<s.length();i++){
+            if(s[i]=='1')onecount++;
+        }
+
+        int onesdue=0;
+
+        for(int i=0;i<s.length();i++){
+            if(s[i]=='0' && target[i]=='1'){
+                if(onesdue>0){
+                    onesdue--;
+                    continue;
+                } 
+                if(onecount==0) return 0; 
+                else onecount++;
+            } 
+            else if(s[i]=='1' && target[i]=='0'){
+                if(onecount<=1){
+                    onesdue++;
+                } 
+                else onecount--;
+            }
+        }
+
+        if(onesdue>0)return 0;
+
+        return 1;
+    }
+};
