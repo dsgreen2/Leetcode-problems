@@ -1,0 +1,59 @@
+class Solution {
+public:
+int f(int i,string s,unordered_map<string,int> umap,vector<int>&v){
+  // cout<<"i "<<i<<endl;
+    if(i>=s.length()) return 0;
+    if(v[i]!=-1) return v[i];
+    string part="";
+    int extral=s.length();
+    int ans=s.length();
+    
+    for(int j=i;j<s.length();j++){
+        part+=s[j];
+        if(umap[part]==0){
+            extral=part.length();
+        }
+        else{
+            extral=0;
+        }
+        ans=min(ans,extral+f(j+1,s,umap,v));
+      
+    }
+    //cout<<"returning from i "<<i<<" "<<ans<<endl;
+    return v[i]=ans;
+}
+    int minExtraChar(string s, vector<string>& di) {
+        unordered_map<string,int> umap;
+        for(auto i:di){
+            umap[i]++;
+        }
+        vector<int> v(s.length()+1,-1);
+        
+        
+        //return f(0,s,umap,v);
+
+        vector<int> dp(s.length()+1,0);
+        dp[s.length()]=0;
+
+        for(int i=s.length()-1;i>=0;i--){
+        string part="";
+        int extral=s.length();
+          int ans=s.length();
+    
+    for(int j=i;j<s.length();j++){
+        part+=s[j];
+        if(umap[part]==0){
+            extral=part.length();
+        }
+        else{
+            extral=0;
+        }
+        ans=min(ans,extral+dp[j+1]);
+      
+    }
+    dp[i]=ans;
+}
+
+return dp[0];
+    }
+};
