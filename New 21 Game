@@ -1,0 +1,32 @@
+class Solution {
+public:
+    double new21Game(int n, int k, int maxPts) {
+        vector<double> P(n+1,0.0);
+        // P(i) - probability of getting score =i
+        P[0]=1; // score=0 initially
+
+        double currprobsum = (k==0) ? 0:1;
+
+        for(int i=1;i<=n;i++){
+          
+
+                // probability of score card = 1/maxPoints
+                // Remaining score = P[i-card]
+
+                P[i]=currprobsum/maxPts;
+                if(i<k){
+                    currprobsum+=P[i];
+                }
+                
+                if(i-maxPts>=0 && i-maxPts<k){
+                currprobsum-=P[i-maxPts];
+                }
+
+            
+        }
+
+        // add probabilities from k to n
+
+        return accumulate(begin(P)+k,end(P),0.0);
+    }
+};
