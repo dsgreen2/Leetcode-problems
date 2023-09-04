@@ -1,0 +1,23 @@
+class Solution {
+public:
+int f(ListNode*p1,ListNode*p2){
+    if(p1==NULL || p2==NULL || p2->next==NULL ){
+        return 0;
+    }
+    //cout<<p1->val<<" "<<p2->val<<endl;
+
+    if(p1==p2){
+        return 1;
+    }
+
+    return f(p1->next,p2->next->next);
+
+}
+    bool hasCycle(ListNode *head) {
+        if(head==NULL) return 0;
+        ListNode*p1=head;
+        ListNode*p2=head->next;
+        return f(p1,p2);
+        
+    }
+};
